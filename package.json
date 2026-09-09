@@ -1,0 +1,27 @@
+{
+  "name": "ai-code",
+  "version": "0.2.0",
+  "private": true,
+  "description": "ChatGPT subscription desktop coding assistant built with Electron and TypeScript",
+  "type": "commonjs",
+  "main": "dist/electron/main.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node scripts/test.mjs",
+    "prestart": "npm run build",
+    "start": "node scripts/launch.mjs",
+    "preview": "npm run build && node scripts/launch.mjs --preview",
+    "package": "npm run build && node scripts/package.mjs",
+    "smoke": "npm run build && node dist/electron/tests/protocol_smoke.js",
+    "smoke:ui": "npm run build && node scripts/launch.mjs --smoke"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "@types/node": "24.13.3",
+    "electron": "44.3.0",
+    "typescript": "7.0.2"
+  }
+}

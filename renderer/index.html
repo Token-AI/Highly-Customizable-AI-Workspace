@@ -1,0 +1,65 @@
+<!doctype html>
+<!-- @file index.html
+     @brief 工作台与内置登录窗口共用的本地页面结构。 -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light">
+  <title>AI Code</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="titlebar">
+    <div class="brand"><span class="brand-mark">a<span>i</span></span><span>AI Code</span></div>
+    <div class="title-location"><span data-icon="folder"></span><span id="title-project">工作区</span></div>
+    <div class="window-controls">
+      <button id="title-account" class="title-account" aria-label="账号与头像" aria-haspopup="dialog" title="账号与头像"><span id="title-avatar" class="avatar-picture" data-icon="user"></span><span id="avatar-status" class="avatar-status" aria-hidden="true"></span></button>
+      <button id="minimize" class="caption-button" aria-label="最小化" title="最小化" data-icon="minus"></button>
+      <button id="maximize" class="caption-button" aria-label="最大化" title="最大化" data-icon="square"></button>
+      <button id="close" class="caption-button" aria-label="关闭窗口" title="关闭" data-icon="close"></button>
+    </div>
+  </header>
+  <div id="auth-brand" hidden>ChatGPT</div>
+  <div id="auth-toolbar" hidden><span class="secure-dot"></span><span id="auth-origin">正在打开官方登录页面…</span></div>
+  <div id="auth-error" role="status" aria-live="polite" hidden>登录页面由官方服务提供</div>
+  <div id="workbench">
+    <aside id="sidebar">
+      <section id="sessions-section" class="side-section expanded">
+        <div class="section-heading">
+          <button id="toggle-sessions" class="section-toggle" aria-expanded="true"><span class="chevron" data-icon="chevron"></span>会话</button>
+          <div class="section-actions"><button id="new-chat" class="icon-button" title="新建会话 · Ctrl+N" aria-label="新建会话" data-icon="plus"></button><button id="refresh" class="icon-button" title="刷新会话" aria-label="刷新会话" data-icon="refresh"></button></div>
+        </div>
+        <div id="sessions-content" class="section-content"><div id="session-list"></div></div>
+      </section>
+      <div id="files-section" class="workspace-directories" hidden><div id="file-tree"></div></div>
+      <div class="sidebar-bottom">
+        <div id="account-badge"><span id="sidebar-avatar" class="account-avatar avatar-picture" data-icon="user"></span><div class="account-text"><div id="account-name">ChatGPT 账号</div><div id="quota">使用订阅中的 Codex 额度</div></div></div>
+        <button id="login" class="account-button"><span data-icon="login"></span><span id="login-label">登录 ChatGPT</span><span data-icon="arrow-right"></span></button>
+        <div class="sidebar-links"><button id="reconnect" class="text-button"><span data-icon="refresh"></span>重新连接</button><button id="about" class="text-button"><span data-icon="info"></span>关于</button></div>
+      </div>
+    </aside>
+    <div id="sidebar-resizer" role="separator" aria-label="调整侧栏宽度" aria-orientation="vertical" tabindex="0"></div>
+    <main class="main-panel">
+      <header class="panel-header"><div class="panel-title"><span data-icon="spark"></span><span id="chat-title">新会话</span></div><div class="panel-actions"><span id="connection" class="connection"><i></i>未连接</span><button id="show-diff" class="icon-button" title="查看文件更改" aria-label="查看文件更改" data-icon="code"></button><button id="copy-reply" class="icon-button" title="复制最后回复" aria-label="复制最后回复" data-icon="copy"></button><button id="export" class="icon-button" title="导出会话" aria-label="导出会话" data-icon="export"></button></div></header>
+      <div id="error-banner" role="alert" hidden></div>
+      <div id="chat-area" class="empty">
+        <div id="conversation" aria-label="对话记录" tabindex="0"></div>
+        <div id="composer-area">
+          <div id="welcome"><div class="welcome-mark" data-icon="spark"></div><h1>从一个想法开始</h1><p>探索代码，解决问题，一起把想法实现。</p></div>
+          <div class="composer-pickers"><div class="picker-anchor"><button id="model-picker" class="pill" aria-haspopup="listbox" aria-expanded="false"><span data-icon="spark"></span><span id="model-label">选择模型</span><span data-icon="chevron-down"></span></button><div id="model-menu" class="picker-menu" role="listbox" hidden></div></div><div class="picker-anchor project-anchor"><button id="open-project" class="pill" aria-haspopup="dialog" aria-expanded="false"><span data-icon="folder"></span><span id="project-label">不在项目中工作</span><span data-icon="chevron-down"></span></button><div id="project-menu" class="project-menu" role="dialog" aria-label="选择项目" hidden><label class="project-search"><span data-icon="search"></span><input id="project-search" placeholder="搜索项目" aria-label="搜索项目" autocomplete="off"></label><div id="project-list" role="listbox" aria-label="项目"></div><div class="project-menu-actions"><button id="manage-project"><span data-icon="folder-plus"></span>管理项目目录</button><button id="new-project"><span data-icon="plus"></span>新建项目</button><button id="leave-project"><span data-icon="close"></span>不在项目中工作</button></div></div></div></div>
+          <div id="message-queue" class="message-queue" aria-label="待发送消息" hidden></div>
+          <div class="composer"><textarea id="prompt" rows="3" placeholder="描述你的想法，或输入要完成的任务…" aria-label="消息输入框" spellcheck="false"></textarea><div id="attachments"></div><div class="composer-toolbar"><button id="attach" class="icon-button" title="添加项目文件作为上下文" aria-label="添加项目文件作为上下文" data-icon="plus"></button><div class="picker-anchor"><button id="mode-picker" class="text-button" aria-haspopup="listbox" aria-expanded="false"><span data-icon="code"></span><span id="mode-label">只读聊天</span><span data-icon="chevron-down"></span></button><div id="mode-menu" class="picker-menu" role="listbox" hidden></div></div><span class="composer-spacer"></span><span id="generation-hint"></span><button id="send" class="send-button" aria-label="发送消息" title="发送 · Ctrl+Enter" data-icon="arrow-up"></button><div id="response-controls" class="picker-anchor" hidden><button id="response-options" class="response-options" aria-label="生成期间的消息操作" aria-haspopup="menu" aria-expanded="false" title="消息操作"><span data-icon="plus"></span><span data-icon="chevron-down"></span></button><div id="response-menu" class="response-menu" role="menu" hidden><button id="stop-and-send" role="menuitem"><span data-icon="arrow-right"></span><span>停止并发送</span><kbd>Ctrl+Enter</kbd></button><button id="queue-message" role="menuitem"><span data-icon="plus"></span><span>添加到队列</span><kbd>Alt+Enter</kbd></button><button id="steer-message" role="menuitem"><span data-icon="steer"></span><span>通过消息引导</span><kbd>Enter</kbd></button><button id="side-chat" role="menuitem"><span data-icon="chat"></span><span>Ask in Side Chat</span></button></div></div></div></div>
+          <div class="composer-footnote"><span><span data-icon="shield"></span>操作按需审批</span><span id="composer-shortcuts">Ctrl+Enter 发送 · Enter 换行</span></div>
+        </div>
+      </div>
+      <section id="file-preview" hidden><header><span data-icon="file"></span><span id="preview-name"></span><button id="close-preview" class="icon-button" aria-label="关闭文件预览" data-icon="close"></button></header><div id="preview-note">只读预览</div><pre id="preview-code" tabindex="0"></pre></section>
+    </main>
+  </div>
+  <footer id="statusbar"><span id="status">正在准备工作区…</span><span id="technology">Electron · ChatGPT</span></footer>
+  <div id="modal-layer" hidden></div>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

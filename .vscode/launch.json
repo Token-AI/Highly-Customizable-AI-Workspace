@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "AI Code: Electron",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe",
+      "runtimeArgs": [
+        "--inspect=0"
+      ],
+      "args": [
+        "."
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "ELECTRON_RUN_AS_NODE": null
+      },
+      "outFiles": [
+        "${workspaceFolder}/dist/electron/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal",
+      "preLaunchTask": "Build Electron"
+    },
+    {
+      "name": "AI Code: Preview",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe",
+      "args": [
+        ".",
+        "--preview"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "ELECTRON_RUN_AS_NODE": null
+      },
+      "outFiles": [
+        "${workspaceFolder}/dist/electron/**/*.js"
+      ],
+      "console": "integratedTerminal",
+      "preLaunchTask": "Build Electron"
+    }
+  ]
+}
